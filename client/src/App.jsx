@@ -28,7 +28,8 @@ function App() {
   const [refreshTrigger, setRefreshTrigger] = useState(0);
 
   // Save to DB form state
-  const [saveForm, setSaveForm] = useState({ dateFrom: '', dateTo: '' });
+  const getTodayDate = () => new Date().toISOString().split('T')[0];
+  const [saveForm, setSaveForm] = useState({ dateFrom: getTodayDate(), dateTo: getTodayDate() });
   const [saving, setSaving] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(null);
   const [saveError, setSaveError] = useState(null);
@@ -78,7 +79,7 @@ function App() {
         date_to: saveForm.dateTo,
       });
       setSaveSuccess('Weather data saved to database successfully!');
-      setSaveForm({ dateFrom: '', dateTo: '' });
+      setSaveForm({ dateFrom: getTodayDate(), dateTo: getTodayDate() });
       setRefreshTrigger((prev) => prev + 1);
       setTimeout(() => setSaveSuccess(null), 4000);
     } catch (err) {
